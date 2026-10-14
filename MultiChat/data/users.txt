@@ -1,2 +1,4 @@
 rahul	password456
+Jarvis	password123
+laptop	password123
 manish	password123

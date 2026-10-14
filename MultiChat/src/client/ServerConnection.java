@@ -12,7 +12,7 @@ public class ServerConnection {
     private BufferedReader input;
     private PrintWriter output;
 
-    private static final String SERVER_ADDRESS = "localhost";
+    private static final String SERVER_ADDRESS = "10.58.31.40";
     private static final int PORT = 5050;
 
     public boolean connect() {
