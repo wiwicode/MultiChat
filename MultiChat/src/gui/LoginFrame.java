@@ -1,9 +1,9 @@
+
 package gui;
 
 import client.ServerConnection;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class LoginFrame extends JFrame {
 
@@ -22,7 +22,8 @@ public class LoginFrame extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(24, 27, 33));
-        panel.setBorder(BorderFactory.createEmptyBorder(35, 40, 35, 40));
+        panel.setBorder(
+                BorderFactory.createEmptyBorder(35, 40, 35, 40));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("MultiChat");
@@ -30,7 +31,8 @@ public class LoginFrame extends JFrame {
         title.setForeground(new Color(111, 211, 156));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel subtitle = new JLabel("Connect. Chat. Collaborate.");
+        JLabel subtitle =
+                new JLabel("Connect. Chat. Collaborate.");
         subtitle.setForeground(Color.LIGHT_GRAY);
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -90,9 +92,13 @@ public class LoginFrame extends JFrame {
         field.setBackground(new Color(39, 43, 51));
         field.setForeground(Color.WHITE);
         field.setCaretColor(Color.WHITE);
+
         field.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(65, 72, 83)),
-                BorderFactory.createEmptyBorder(8, 10, 8, 10)));
+                BorderFactory.createLineBorder(
+                        new Color(65, 72, 83)),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+
         field.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
@@ -102,12 +108,19 @@ public class LoginFrame extends JFrame {
         button.setFont(new Font("SansSerif", Font.BOLD, 14));
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setBackground(primary
-                ? new Color(111, 211, 156)
-                : new Color(39, 43, 51));
-        button.setForeground(primary
-                ? new Color(24, 27, 33)
-                : Color.WHITE);
+
+        if (primary) {
+            button.setBackground(new Color(111, 211, 156));
+            button.setForeground(new Color(24, 27, 33));
+        } else {
+            button.setBackground(new Color(39, 43, 51));
+            button.setForeground(Color.WHITE);
+        }
+
+        // Use the specified colours instead of the system defaults.
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setBorderPainted(false);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
@@ -126,6 +139,7 @@ public class LoginFrame extends JFrame {
         statusLabel.setText("Connecting to server...");
 
         new SwingWorker<String, Void>() {
+
             private ServerConnection connection;
 
             @Override
@@ -164,7 +178,7 @@ public class LoginFrame extends JFrame {
                                 "Account created! Now log in.");
 
                     } else if (response.startsWith("LOGIN_SUCCESS")) {
-                        // Transfer the live connection to MainFrame.
+                        // Transfer the authenticated connection.
                         ServerConnection authenticatedConnection =
                                 connection;
 
@@ -189,6 +203,7 @@ public class LoginFrame extends JFrame {
                     statusLabel.setForeground(
                             new Color(255, 120, 120));
                     statusLabel.setText("Login failed. Try again.");
+
                 } finally {
                     loginButton.setEnabled(true);
                     registerButton.setEnabled(true);
@@ -201,8 +216,9 @@ public class LoginFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(
-                        UIManager.getSystemLookAndFeelClassName());
+                        UIManager.getCrossPlatformLookAndFeelClassName());
             } catch (Exception ignored) {
+                // Continue with the default Look and Feel.
             }
 
             new LoginFrame().setVisible(true);
